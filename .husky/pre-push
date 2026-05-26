@@ -1,2 +1,2 @@
-pnpm typecheck
+./node_modules/.bin/tsc -p apps/web/tsconfig.json --noEmit
 cd apps/api && python -m pytest tests/unit -q
