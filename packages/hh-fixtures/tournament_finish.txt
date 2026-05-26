@@ -1,0 +1,21 @@
+Mão PokerStars #260820828719: Torneio #4000776344, $ 0.42+$ 0.08 USD Hold'em No Limit - Nível I (10/20) - 2026/05/15 19:10:22 ET
+Mesa '4000776344 1' 2-max Lugar #1 é o botão
+Lugar 1: Hero (1500 em fichas)
+Lugar 2: Player2 (1500 em fichas)
+Hero: paga o small blind 10
+Player2: paga o big blind 20
+*** CARTAS DA MÃO ***
+Hero recebe [Ah Kh]
+Hero: aumenta 40 para 60
+Player2: aumenta 1440 para 1500 e está all-in
+Hero: iguala 1440 e está all-in
+*** SHOW DOWN ***
+Hero: mostra [Ah Kh] (Carta Alta Ás)
+Player2: mostra [Qs Qc] (par de Dama)
+Hero recebeu 3000 do pote
+Player2 terminou o torneio em 2º lugar
+Hero ganhou o torneio e recebeu $ 1.00 - parabéns!
+*** SUMÁRIO ***
+Total pote 3000 | comissão 0
+Lugar 1: Hero (Botão) (small blind) mostrou [Ah Kh] e ganhou
+Lugar 2: Player2 (big blind) mostrou [Qs Qc] e perdeu

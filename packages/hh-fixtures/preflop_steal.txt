@@ -1,0 +1,20 @@
+Mão PokerStars #260820828711: Torneio #4000776344, $ 0.42+$ 0.08 USD Hold'em No Limit - Nível I (10/20) - 2026/05/15 19:02:22 ET
+Mesa '4000776344 1' 6-max Lugar #3 é o botão
+Lugar 1: Player1 (1500 em fichas)
+Lugar 2: Hero (1500 em fichas)
+Lugar 3: Player3 (1500 em fichas)
+Player1: paga o small blind 10
+Hero: paga o big blind 20
+*** CARTAS DA MÃO ***
+Hero recebe [As Kd]
+Player3: aumenta 40 para 60
+Player1: desiste
+Hero: desiste
+Aposta não-igualada (40) voltou para Player3
+Player3 recebeu 50 do pote
+*** SUMÁRIO ***
+Total pote 50 | comissão 0
+Lugar 1: Player1 (small blind) desistiu antes Flop
+Lugar 2: Hero (big blind) desistiu antes Flop
+Lugar 3: Player3 (Botão) recebeu (50)
+

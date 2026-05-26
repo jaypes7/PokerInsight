@@ -49,3 +49,4 @@ build/
 minio-data/
 postgres-data/
 redis-data/
+.storage/

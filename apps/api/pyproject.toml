@@ -6,7 +6,7 @@ requires-python = ">=3.12,<3.13"
 dependencies = [
   "alembic>=1.13.3",
   "asyncpg>=0.29.0",
-  "fastapi>=0.115.0",
+  "fastapi==0.135.4",
   "pydantic>=2.8.0",
   "pydantic-settings>=2.4.0",
   "redis>=5.0.8",
@@ -40,9 +40,12 @@ plugins = ["pydantic.mypy"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+pythonpath = ["."]
 testpaths = ["tests"]
 markers = [
-  "integration: tests that require Postgres or Redis"
+  "integration: tests that require Postgres or Redis",
+  "golden: parser golden fixtures",
+  "property: lightweight property-style parser tests"
 ]
 
 [tool.coverage.run]
