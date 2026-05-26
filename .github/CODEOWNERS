@@ -1,0 +1,4 @@
+* @manse
+/apps/api/app/auth/** @manse
+/apps/api/app/billing/** @manse
+/infra/** @manse

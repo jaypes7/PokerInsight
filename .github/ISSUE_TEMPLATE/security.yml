@@ -1,0 +1,14 @@
+name: Security report
+description: Use este template apenas para apontamentos sem dados sensiveis.
+title: "security: "
+labels: ["security"]
+body:
+  - type: markdown
+    attributes:
+      value: "Para vulnerabilidades reais, envie email para security@pokerinsight.app em vez de abrir detalhes publicos."
+  - type: textarea
+    id: summary
+    attributes:
+      label: Resumo
+    validations:
+      required: true
