@@ -12,6 +12,9 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 from structlog.contextvars import bind_contextvars, clear_contextvars
 
+from app.api.auth import router as auth_router
+from app.api.hands import router as hands_router
+from app.api.imports import router as imports_router
 from app.core.config import Settings, get_settings
 from app.db.session import engine, get_db
 from app.observability.logging import configure_logging
@@ -60,6 +63,9 @@ def create_app() -> FastAPI:
         redoc_url=redoc_url,
         lifespan=lifespan,
     )
+    app.include_router(auth_router)
+    app.include_router(imports_router)
+    app.include_router(hands_router)
 
     @app.middleware("http")
     async def request_context(

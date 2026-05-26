@@ -1,31 +1,36 @@
-# Notas do agente para F0-FOUNDATION
+﻿# Notas do agente para F1
 
 ## Decisoes tomadas
-- Agrupei a fase F0 em uma unica branch `feat/f0-foundation`, porque o pedido humano foi realizar a fase inteira.
-- Usei licenca Proprietary como default, conforme TODO.md.
-- Mantive o backend em `apps/api/app` para atender os ACs de F0, com separacao interna `core`, `db` e `observability`.
-- Ajustei o Playwright para iniciar o web server via `corepack pnpm dev`, evitando depender do shim `pnpm` global.
-- Adicionei `.dockerignore` na raiz e em `apps/api` para impedir que artefatos locais quebrem builds Docker.
+- Implementei a F1 em uma branch unica (`feat/f1-db-001-auth-tables`) para atender ao pedido de fase completa.
+- Mantive `F0-DOCS-001` aberto inicialmente por ser opcional, e marquei a F1 como concluida no `TODO.md` apos validar o fluxo integrado.
+- Dividi o schema em migrations coesas: auth/auditoria, storage de poker, billing/stats/flags.
+- Implementei o parser como pacote puro em `app/parser`, sem dependencia de FastAPI ou SQLAlchemy.
+- Usei armazenamento local em `.storage/` com URLs pre-assinadas deterministicas como fallback dev/test.
 
 ## Trade-offs
-- Docker nao esta disponivel no PATH deste ambiente; validei sintaxe indiretamente por leitura e fixei digests do compose CI via Docker Registry API.
-- O shadcn/ui foi representado por `components.json` e um primitive Button minimo, suficiente para o skeleton.
-- `next build` ainda emite aviso dizendo que o plugin Next nao foi detectado no ESLint flat config, mesmo com `@next/eslint-plugin-next` aplicado manualmente. Nao bloqueia lint/build, mas vale revisar quando consolidar a config de ESLint 9 + Next 15.
+- Auth usa PBKDF2-HMAC local em vez de Argon2id/HIBP por nao adicionar dependencia nova nesta passada; precisa endurecer antes de producao.
+- Celery tem fallback local quando a lib nao esta instalada; o contrato da task existe, mas worker real pede adicionar `celery` nas dependencias.
+- Storage nao usa boto3/aioboto3 ainda; o wrapper preserva path enforcement e TTL, mas o fluxo MinIO real deve ser conectado depois.
+- Golden tests validam invariantes e fixtures anonimizadas, mas ainda nao comparam snapshots JSON canonicos.
+- O benchmark e um smoke de throughput, nao uma suite `pytest-benchmark` com baseline estatistico.
 
 ## Pontos para revisao humana atenta
-- Confirmar se a licenca proprietaria deve virar MIT antes de abrir o repositorio.
-- Confirmar owners reais em `.github/CODEOWNERS`.
-- Confirmar politica de CSP quando integrarem Auth.js, Sentry e analytics.
-- Node 20.20.2 foi instalado via `nvm install 20`, mas `nvm use 20` falhou com "Acesso negado"; usar terminal admin ou revisar permissoes do `nvm-windows`.
-- O PATH atual ainda aponta para `C:\nvm4w\nodejs\node.exe` com Node 24.14.0; para validar usei o Node 20 diretamente em `C:\Users\manse\AppData\Local\nvm\v20.20.2`.
+- Revisar RLS de tabelas derivadas (`hand_players`, `pots`) por depender de subquery em `hands`.
+- Revisar formula de `hero_net_cents`, que hoje usa chips investidos/coletados como aproximaÃ§Ã£o.
+- Confirmar se o fallback local de upload via `raw_text` em `/complete` deve permanecer so em dev/test.
+- Trocar hashing e email/rate-limit de auth pela implementacao final antes de expor publicamente.
 
 ## Comandos executados que tiveram efeito nao-trivial
-- `git switch -c feat/f0-foundation`
-- `python -m pip install -r apps/api/requirements-dev.txt`
-- `corepack pnpm install`
-- `corepack pnpm --filter @pokerinsight/web dev`
-- `docker compose -f infra/compose.dev.yml config`
-- `nvm install 20`
-- `docker compose -f infra/compose.dev.yml up -d`
+- `git checkout -b feat/f1-db-001-auth-tables`
+- `docker compose -f infra/compose.dev.yml up -d postgres redis`
 - `docker compose -f infra/compose.dev.yml down`
-- `docker compose -f infra/compose.ci.yml build api web`
+- `python -m ruff check . --fix`
+- `python -m ruff format .`
+- `python -m ruff format --check .`
+- `python -m ruff check .`
+- `python -m mypy --strict app`
+- `python -m pytest tests/unit tests/golden tests/property tests/benchmarks -q`
+- `python -m pytest tests/integration -q`
+
+
+continue as notas a partir daqui, nunca apague notas de outras fases!

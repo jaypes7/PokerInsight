@@ -42,7 +42,9 @@ plugins = ["pydantic.mypy"]
 asyncio_mode = "auto"
 testpaths = ["tests"]
 markers = [
-  "integration: tests that require Postgres or Redis"
+  "integration: tests that require Postgres or Redis",
+  "golden: parser golden fixtures",
+  "property: lightweight property-style parser tests"
 ]
 
 [tool.coverage.run]

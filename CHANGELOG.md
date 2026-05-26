@@ -9,3 +9,4 @@ Versioning once public releases begin.
 
 ### Added
 - Foundation scaffold for monorepo, API, web, CI, and local development.
+- F1 parser/storage slice: auth/import/hands schema, parser package, golden fixtures, local object storage, repositories, worker task, and REST endpoints.

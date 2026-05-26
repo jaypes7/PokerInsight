@@ -32,135 +32,135 @@
 > Objetivo: repositório, ambiente de dev, CI verde, infraestrutura mínima para começar a codar com confiança.
 
 ### F0-REPO-001 — Inicializar monorepo
-- [ ] Description: Criar repositório git público/privado, estrutura de monorepo com `pnpm` workspaces. Diretórios: `apps/api`, `apps/web`, `packages/hh-fixtures`, `packages/shared-types`, `infra/`, `docs/`, `scripts/`.
+- [x] Description: Criar repositório git público/privado, estrutura de monorepo com `pnpm` workspaces. Diretórios: `apps/api`, `apps/web`, `packages/hh-fixtures`, `packages/shared-types`, `infra/`, `docs/`, `scripts/`.
 - Docs: `README.md`, `AGENTS.md`
 - AC:
-  - [ ] `pnpm-workspace.yaml` lista todos os pacotes.
-  - [ ] `.gitignore` cobre node, python, IDE, secrets, build artifacts, `.env*`.
-  - [ ] `.editorconfig`, `.gitattributes`, `LICENSE` (MIT ou Proprietary — decisão pendente, default Proprietary).
-  - [ ] `CHANGELOG.md` (Keep a Changelog format) com `## [Unreleased]`.
-  - [ ] README.md, AGENTS.md, e todos os `docs/*.md` versionados.
+  - [x] `pnpm-workspace.yaml` lista todos os pacotes.
+  - [x] `.gitignore` cobre node, python, IDE, secrets, build artifacts, `.env*`.
+  - [x] `.editorconfig`, `.gitattributes`, `LICENSE` (MIT ou Proprietary — decisão pendente, default Proprietary).
+  - [x] `CHANGELOG.md` (Keep a Changelog format) com `## [Unreleased]`.
+  - [x] README.md, AGENTS.md, e todos os `docs/*.md` versionados.
 - Agent: any | Effort: S | Deps: —
 
 ### F0-REPO-002 — Conventional Commits + commit hook
-- [ ] Description: Configurar `commitlint`, `husky` e `lint-staged` para forçar Conventional Commits e rodar lint local.
+- [x] Description: Configurar `commitlint`, `husky` e `lint-staged` para forçar Conventional Commits e rodar lint local.
 - Docs: `AGENTS.md`
 - AC:
-  - [ ] `commit-msg` hook rejeita commit fora do padrão.
-  - [ ] `pre-commit` roda ruff/eslint nos arquivos staged.
-  - [ ] `pre-push` roda `pnpm typecheck` e `pytest tests/unit -q` (rápido).
+  - [x] `commit-msg` hook rejeita commit fora do padrão.
+  - [x] `pre-commit` roda ruff/eslint nos arquivos staged.
+  - [x] `pre-push` roda `pnpm typecheck` e `pytest tests/unit -q` (rápido).
 - Agent: Codex | Effort: S | Deps: F0-REPO-001
 
 ### F0-REPO-003 — Templates GitHub
-- [ ] Description: PR template, issue templates (bug/feature/security), CODEOWNERS, FUNDING.yml (opcional), `SECURITY.md` (vulnerability disclosure), `CONTRIBUTING.md`.
+- [x] Description: PR template, issue templates (bug/feature/security), CODEOWNERS, FUNDING.yml (opcional), `SECURITY.md` (vulnerability disclosure), `CONTRIBUTING.md`.
 - Docs: `AGENTS.md`, `08-SECURITY.md` §14
 - AC:
-  - [ ] `.github/PULL_REQUEST_TEMPLATE.md` com checklist da DoD.
-  - [ ] `.github/ISSUE_TEMPLATE/` com 3 templates.
-  - [ ] `SECURITY.md` na raiz.
-  - [ ] CODEOWNERS exigindo review em `apps/api/app/auth/**`, `apps/api/app/billing/**`, `infra/**`.
+  - [x] `.github/PULL_REQUEST_TEMPLATE.md` com checklist da DoD.
+  - [x] `.github/ISSUE_TEMPLATE/` com 3 templates.
+  - [x] `SECURITY.md` na raiz.
+  - [x] CODEOWNERS exigindo review em `apps/api/app/auth/**`, `apps/api/app/billing/**`, `infra/**`.
 - Agent: any | Effort: XS | Deps: F0-REPO-001
 
 ### F0-INFRA-001 — Docker Compose para dev
-- [ ] Description: `infra/compose.dev.yml` sobe Postgres 16, Redis 7, MinIO (S3-compatible). Volumes persistentes, healthchecks, portas mapeadas. Script `make dev` sobe tudo.
+- [x] Description: `infra/compose.dev.yml` sobe Postgres 16, Redis 7, MinIO (S3-compatible). Volumes persistentes, healthchecks, portas mapeadas. Script `make dev` sobe tudo.
 - Docs: `02-ARCHITECTURE.md` §6, `03-TECH-STACK.md`
 - AC:
-  - [ ] `docker compose -f infra/compose.dev.yml up -d` sobe limpo.
-  - [ ] DB inicializa com extensions `uuid-ossp`, `pgcrypto`, `pg_trgm`.
-  - [ ] MinIO cria bucket `pokerinsight-dev` no startup (init container ou script).
-  - [ ] `Makefile` targets: `dev`, `dev-down`, `dev-logs`, `dev-reset` (drop volumes).
+  - [x] `docker compose -f infra/compose.dev.yml up -d` sobe limpo.
+  - [x] DB inicializa com extensions `uuid-ossp`, `pgcrypto`, `pg_trgm`.
+  - [x] MinIO cria bucket `pokerinsight-dev` no startup (init container ou script).
+  - [x] `Makefile` targets: `dev`, `dev-down`, `dev-logs`, `dev-reset` (drop volumes).
 - Agent: any | Effort: S | Deps: F0-REPO-001
 
 ### F0-INFRA-002 — Compose CI
-- [ ] Description: `infra/compose.ci.yml` versão mínima usada pelos E2E em GitHub Actions.
+- [x] Description: `infra/compose.ci.yml` versão mínima usada pelos E2E em GitHub Actions.
 - Docs: `09-TESTING-CICD.md` §8.2
 - AC:
-  - [ ] Sobe API+Web+DB+Redis+MinIO; sem volumes persistentes.
-  - [ ] Imagens fixadas por SHA256.
+  - [x] Sobe API+Web+DB+Redis+MinIO; sem volumes persistentes.
+  - [x] Imagens fixadas por SHA256.
 - Agent: Codex | Effort: S | Deps: F0-INFRA-001
 
 ### F0-CI-001 — Pipeline CI base (lint + unit)
-- [ ] Description: `.github/workflows/ci.yml` com jobs `changes`, `lint-api`, `lint-web`, `test-api-unit`, `test-web`.
+- [x] Description: `.github/workflows/ci.yml` com jobs `changes`, `lint-api`, `lint-web`, `test-api-unit`, `test-web`.
 - Docs: `09-TESTING-CICD.md` §8
 - AC:
-  - [ ] Concurrency cancela jobs antigos.
-  - [ ] Path filter pula jobs irrelevantes.
-  - [ ] Cache pip e pnpm habilitado.
-  - [ ] Falha bloqueia merge em `main`.
+  - [x] Concurrency cancela jobs antigos.
+  - [x] Path filter pula jobs irrelevantes.
+  - [x] Cache pip e pnpm habilitado.
+  - [x] Falha bloqueia merge em `main`.
 - Agent: Codex | Effort: M | Deps: F0-REPO-001
 
 ### F0-CI-002 — Pipeline CI integração + audit
-- [ ] Description: Adicionar jobs `test-api-integration`, `audit-api`, `gitleaks`.
+- [x] Description: Adicionar jobs `test-api-integration`, `audit-api`, `gitleaks`.
 - Docs: `09-TESTING-CICD.md` §8
 - AC:
-  - [ ] Job integração sobe Postgres+Redis como services.
-  - [ ] `gitleaks` falha em qualquer secret detectado.
-  - [ ] `pip-audit` falha em vulnerabilidades High/Critical.
+  - [x] Job integração sobe Postgres+Redis como services.
+  - [x] `gitleaks` falha em qualquer secret detectado.
+  - [x] `pip-audit` falha em vulnerabilidades High/Critical.
 - Agent: Codex | Effort: M | Deps: F0-CI-001
 
 ### F0-API-001 — Skeleton FastAPI
-- [ ] Description: `apps/api/app/main.py` com FastAPI app, routers vazios, middleware de request_id, lifespan hook.
+- [x] Description: `apps/api/app/main.py` com FastAPI app, routers vazios, middleware de request_id, lifespan hook.
 - Docs: `02-ARCHITECTURE.md`, `12-OBSERVABILITY.md` §2
 - AC:
-  - [ ] `uvicorn app.main:app` sobe em <2s.
-  - [ ] `GET /healthz` retorna 200 com `{ "status": "ok" }`.
-  - [ ] `GET /readyz` checa DB e Redis; 503 se falha.
-  - [ ] `GET /version` retorna versão e SHA.
-  - [ ] OpenAPI docs em `/docs` (basic auth em prod via env var).
+  - [x] `uvicorn app.main:app` sobe em <2s.
+  - [x] `GET /healthz` retorna 200 com `{ "status": "ok" }`.
+  - [x] `GET /readyz` checa DB e Redis; 503 se falha.
+  - [x] `GET /version` retorna versão e SHA.
+  - [x] OpenAPI docs em `/docs` (basic auth em prod via env var).
 - Agent: Codex | Effort: S | Deps: F0-INFRA-001
 
 ### F0-API-002 — Configuração via Pydantic Settings
-- [ ] Description: `app/config.py` com `BaseSettings` consolidando todas as env vars; validação na startup.
+- [x] Description: `app/config.py` com `BaseSettings` consolidando todas as env vars; validação na startup.
 - Docs: `03-TECH-STACK.md` (`.env.example`)
 - AC:
-  - [ ] Falha rápido se env var obrigatória ausente.
-  - [ ] `.env.local` carregado em dev; ignorado em prod.
-  - [ ] Tipos validados (URLs, ints, secrets).
+  - [x] Falha rápido se env var obrigatória ausente.
+  - [x] `.env.local` carregado em dev; ignorado em prod.
+  - [x] Tipos validados (URLs, ints, secrets).
 - Agent: Codex | Effort: S | Deps: F0-API-001
 
 ### F0-API-003 — Logging estruturado
-- [ ] Description: Setup `structlog` conforme `12-OBSERVABILITY.md` §2; middleware injeta `request_id`.
+- [x] Description: Setup `structlog` conforme `12-OBSERVABILITY.md` §2; middleware injeta `request_id`.
 - Docs: `12-OBSERVABILITY.md` §2
 - AC:
-  - [ ] Logs em JSON em prod, console-friendly em dev.
-  - [ ] Header `X-Request-ID` propagado.
-  - [ ] Teste verifica que campo `request_id` aparece em log de request.
+  - [x] Logs em JSON em prod, console-friendly em dev.
+  - [x] Header `X-Request-ID` propagado.
+  - [x] Teste verifica que campo `request_id` aparece em log de request.
 - Agent: Codex | Effort: S | Deps: F0-API-002
 
 ### F0-API-004 — SQLAlchemy 2.0 async + sessão
-- [ ] Description: Engine, session factory async, dependency injection via `Depends(get_db)`. `AsyncSession` por request.
+- [x] Description: Engine, session factory async, dependency injection via `Depends(get_db)`. `AsyncSession` por request.
 - Docs: `04-DATA-MODEL.md`
 - AC:
-  - [ ] Pool config conforme `10-PERFORMANCE.md` §5.
-  - [ ] Encerramento de sessão limpo em erro.
-  - [ ] Teste integração faz `SELECT 1`.
+  - [x] Pool config conforme `10-PERFORMANCE.md` §5.
+  - [x] Encerramento de sessão limpo em erro.
+  - [x] Teste integração faz `SELECT 1`.
 - Agent: Codex | Effort: S | Deps: F0-API-002
 
 ### F0-API-005 — Alembic setup
-- [ ] Description: `alembic init` adaptado para async; primeira migration vazia; comando `alembic upgrade head` em CI integration.
+- [x] Description: `alembic init` adaptado para async; primeira migration vazia; comando `alembic upgrade head` em CI integration.
 - Docs: `04-DATA-MODEL.md` §10
 - AC:
-  - [ ] `alembic upgrade head` e `downgrade base` funcionam.
-  - [ ] Naming convention de constraints definida.
-  - [ ] Teste de migration cria DB do zero.
+  - [x] `alembic upgrade head` e `downgrade base` funcionam.
+  - [x] Naming convention de constraints definida.
+  - [x] Teste de migration cria DB do zero.
 - Agent: Codex | Effort: S | Deps: F0-API-004
 
 ### F0-WEB-001 — Skeleton Next.js 15
-- [ ] Description: `apps/web` com Next.js 15 App Router, Tailwind 4, shadcn/ui init, layout raiz, página `/` placeholder.
+- [x] Description: `apps/web` com Next.js 15 App Router, Tailwind 4, shadcn/ui init, layout raiz, página `/` placeholder.
 - Docs: `03-TECH-STACK.md`
 - AC:
-  - [ ] `pnpm dev` em apps/web abre `localhost:3000`.
-  - [ ] Tipos TS estritos (`strict: true`).
-  - [ ] ESLint + Prettier configurados; `pnpm lint` zero warnings.
+  - [x] `pnpm dev` em apps/web abre `localhost:3000`.
+  - [x] Tipos TS estritos (`strict: true`).
+  - [x] ESLint + Prettier configurados; `pnpm lint` zero warnings.
 - Agent: Claude Code | Effort: M | Deps: F0-REPO-001
 
 ### F0-WEB-002 — Headers de segurança
-- [ ] Description: `next.config.js` define CSP, HSTS, X-Frame, Referrer-Policy conforme `08-SECURITY.md` §8.
+- [x] Description: `next.config.js` define CSP, HSTS, X-Frame, Referrer-Policy conforme `08-SECURITY.md` §8.
 - Docs: `08-SECURITY.md` §8
 - AC:
-  - [ ] Headers retornados em `/` (curl).
-  - [ ] CSP não bloqueia Stripe.js.
-  - [ ] Teste Playwright valida headers.
+  - [x] Headers retornados em `/` (curl).
+  - [x] CSP não bloqueia Stripe.js.
+  - [x] Teste Playwright valida headers.
 - Agent: any | Effort: S | Deps: F0-WEB-001
 
 ### F0-DOCS-001 — Publicar docs internas
@@ -178,208 +178,208 @@
 > Objetivo: receber arquivo HH, validar, salvar no R2/MinIO, parsear, persistir hands no DB. Sem UI ainda.
 
 ### F1-DB-001 — Migration: users e auth tables
-- [ ] Description: Migration Alembic criando `users`, `user_oauth_accounts`, `refresh_tokens`, `audit_logs`.
+- [x] Description: Migration Alembic criando `users`, `user_oauth_accounts`, `refresh_tokens`, `audit_logs`.
 - Docs: `04-DATA-MODEL.md` §3.1-3.4
 - AC:
-  - [ ] Constraints, índices e RLS conforme spec.
-  - [ ] Teste upgrade+downgrade limpo.
-  - [ ] Seed de role admin via script separado (não em migration).
+  - [x] Constraints, índices e RLS conforme spec.
+  - [x] Teste upgrade+downgrade limpo.
+  - [x] Seed de role admin via script separado (não em migration).
 - Agent: Codex | Effort: M | Deps: F0-API-005
 
 ### F1-DB-002 — Migration: imports, sessions, hands, hand_players, actions, pots
-- [ ] Description: Migration criando estrutura principal de dados de poker.
+- [x] Description: Migration criando estrutura principal de dados de poker.
 - Docs: `04-DATA-MODEL.md` §3.5-3.10
 - AC:
-  - [ ] Colunas denormalizadas em `hands` (`h_vpip`, etc.) presentes.
-  - [ ] Índices essenciais criados.
-  - [ ] RLS policies habilitadas.
-  - [ ] Constraint `UNIQUE (user_id, site_hand_id)`.
+  - [x] Colunas denormalizadas em `hands` (`h_vpip`, etc.) presentes.
+  - [x] Índices essenciais criados.
+  - [x] RLS policies habilitadas.
+  - [x] Constraint `UNIQUE (user_id, site_hand_id)`.
 - Agent: Codex | Effort: M | Deps: F1-DB-001
 
 ### F1-DB-003 — Migration: subscriptions, webhook_events, stats_snapshots, feature_flags
-- [ ] Description: Restante do schema MVP.
+- [x] Description: Restante do schema MVP.
 - Docs: `04-DATA-MODEL.md` §3.11-3.14
 - AC:
-  - [ ] `webhook_events.event_id` UNIQUE.
-  - [ ] `feature_flags` seed inicial (default flags off).
+  - [x] `webhook_events.event_id` UNIQUE.
+  - [x] `feature_flags` seed inicial (default flags off).
 - Agent: Codex | Effort: S | Deps: F1-DB-002
 
 ### F1-DB-004 — Factories e fixtures de teste
-- [ ] Description: `tests/factories.py` com `factory_boy` para todos os modelos. Fixture `db_session` com rollback automático.
+- [x] Description: `tests/factories.py` com `factory_boy` para todos os modelos. Fixture `db_session` com rollback automático.
 - Docs: `09-TESTING-CICD.md` §5
 - AC:
-  - [ ] Criar user → linha em DB; sem leak entre testes.
-  - [ ] Helper `make_hero_user()` retorna user pronto para usar.
+  - [x] Criar user → linha em DB; sem leak entre testes.
+  - [x] Helper `make_hero_user()` retorna user pronto para usar.
 - Agent: Codex | Effort: M | Deps: F1-DB-003
 
 ### F1-PARSER-001 — Pacote `parser` skeleton
-- [ ] Description: Estrutura `app/parser/` com módulos `splitter.py`, `tokenizer.py`, `assembler.py`, `normalizer.py`, `models.py` (dataclasses `HandDraft`, `SeatDraft`, `ActionDraft`), `errors.py`.
+- [x] Description: Estrutura `app/parser/` com módulos `splitter.py`, `tokenizer.py`, `assembler.py`, `normalizer.py`, `models.py` (dataclasses `HandDraft`, `SeatDraft`, `ActionDraft`), `errors.py`.
 - Docs: `05-HH-PARSER-SPEC.md` §3
 - AC:
-  - [ ] Tipos completos em mypy --strict.
-  - [ ] Sem dependência de SQLAlchemy/web frameworks (parser puro).
+  - [x] Tipos completos em mypy --strict.
+  - [x] Sem dependência de SQLAlchemy/web frameworks (parser puro).
 - Agent: Codex | Effort: S | Deps: F0-API-001
 
 ### F1-PARSER-002 — FileSplitter (separar hands)
-- [ ] Description: Função generator que recebe stream de linhas e emite chunks de linhas correspondendo a 1 hand cada (split em linha em branco após `*** SUMÁRIO ***`).
+- [x] Description: Função generator que recebe stream de linhas e emite chunks de linhas correspondendo a 1 hand cada (split em linha em branco após `*** SUMÁRIO ***`).
 - Docs: `05-HH-PARSER-SPEC.md` §4.1
 - AC:
-  - [ ] Funciona com arquivo de 1 hand e de 10000 hands.
-  - [ ] Tolera CRLF e LF.
-  - [ ] Suporta encoding detection (utf-8-sig, cp1252).
-  - [ ] Teste com fixture `tournament_finish.txt`.
+  - [x] Funciona com arquivo de 1 hand e de 10000 hands.
+  - [x] Tolera CRLF e LF.
+  - [x] Suporta encoding detection (utf-8-sig, cp1252).
+  - [x] Teste com fixture `tournament_finish.txt`.
 - Agent: Codex | Effort: M | Deps: F1-PARSER-001
 
 ### F1-PARSER-003 — LineTokenizer (regex patterns)
-- [ ] Description: Implementar todos os regex listados em `05-HH-PARSER-SPEC.md` §5. Função `tokenize(line) -> Token | None`.
+- [x] Description: Implementar todos os regex listados em `05-HH-PARSER-SPEC.md` §5. Função `tokenize(line) -> Token | None`.
 - Docs: `05-HH-PARSER-SPEC.md` §5, `13-GLOSSARY.md`
 - AC:
-  - [ ] Cada regex em constante module-level compilada.
-  - [ ] Cobertura ≥95% no módulo.
-  - [ ] Teste positivo+negativo por regex (ver `09-TESTING-CICD.md` §4).
-  - [ ] Token desconhecido vira `UnknownLineToken` (não exceção).
+  - [x] Cada regex em constante module-level compilada.
+  - [x] Cobertura ≥95% no módulo.
+  - [x] Teste positivo+negativo por regex (ver `09-TESTING-CICD.md` §4).
+  - [x] Token desconhecido vira `UnknownLineToken` (não exceção).
 - Agent: Codex | Effort: L | Deps: F1-PARSER-001
 
 ### F1-PARSER-004 — HandAssembler (state machine)
-- [ ] Description: Máquina de estados que consome tokens em ordem e popula `HandDraft` com seats, ações por street, board, summary.
+- [x] Description: Máquina de estados que consome tokens em ordem e popula `HandDraft` com seats, ações por street, board, summary.
 - Docs: `05-HH-PARSER-SPEC.md` §4.3
 - AC:
-  - [ ] Erro com posição (linha+col) se transição inválida.
-  - [ ] Suporta todas as fixtures golden.
-  - [ ] Coverage ≥95%.
+  - [x] Erro com posição (linha+col) se transição inválida.
+  - [x] Suporta todas as fixtures golden.
+  - [x] Coverage ≥95%.
 - Agent: Codex | Effort: L | Deps: F1-PARSER-003
 
 ### F1-PARSER-005 — HandNormalizer (derivações)
-- [ ] Description: Pós-processamento: converter played_at ET→UTC; derivar posições (BTN/SB/BB/UTG/etc.); calcular `pot_before/after` por action; identificar uncalled bet; calcular side pots; popular flags hero (`h_vpip`, `h_pfr`, etc.).
+- [x] Description: Pós-processamento: converter played_at ET→UTC; derivar posições (BTN/SB/BB/UTG/etc.); calcular `pot_before/after` por action; identificar uncalled bet; calcular side pots; popular flags hero (`h_vpip`, `h_pfr`, etc.).
 - Docs: `05-HH-PARSER-SPEC.md` §4.4, `06-POKER-STATS-SPEC.md`
 - AC:
-  - [ ] Algoritmo de side pots passa em fixture `multiway_sidepot.txt`.
-  - [ ] Posições corretas em 9-max, 6-max, HU (verificar com fixtures).
-  - [ ] `h_vpip` e `h_pfr` calculados conforme spec stats.
-  - [ ] Coverage ≥95%.
+  - [x] Algoritmo de side pots passa em fixture `multiway_sidepot.txt`.
+  - [x] Posições corretas em 9-max, 6-max, HU (verificar com fixtures).
+  - [x] `h_vpip` e `h_pfr` calculados conforme spec stats.
+  - [x] Coverage ≥95%.
 - Agent: Codex | Effort: L | Deps: F1-PARSER-004
 
 ### F1-PARSER-006 — Validação de invariantes
-- [ ] Description: Função `validate(draft: HandDraft) -> list[Invariant Violation]`. Implementa 10 invariantes listados em `05-HH-PARSER-SPEC.md`.
+- [x] Description: Função `validate(draft: HandDraft) -> list[Invariant Violation]`. Implementa 10 invariantes listados em `05-HH-PARSER-SPEC.md`.
 - Docs: `05-HH-PARSER-SPEC.md` §7
 - AC:
-  - [ ] Cada invariante tem teste positivo (passa) e negativo (detecta).
-  - [ ] Violação grava em `import_errors` mas não aborta o batch.
+  - [x] Cada invariante tem teste positivo (passa) e negativo (detecta).
+  - [x] Violação grava em `import_errors` mas não aborta o batch.
 - Agent: Codex | Effort: M | Deps: F1-PARSER-005
 
 ### F1-PARSER-007 — Golden fixtures + tests
-- [ ] Description: Criar 10 fixtures `.txt` listadas em `09-TESTING-CICD.md` §2.5 e seus snapshots JSON esperados em `expected/`. Teste roda parser e compara.
+- [x] Description: Criar 10 fixtures `.txt` listadas em `09-TESTING-CICD.md` §2.5 e seus snapshots JSON esperados em `expected/`. Teste roda parser e compara.
 - Docs: `09-TESTING-CICD.md` §2.5
 - AC:
-  - [ ] 10 fixtures anonimizadas (sem nicks reais) committed.
-  - [ ] CLI `pytest --update-golden` regenera snapshots.
-  - [ ] Snapshot tem todos campos relevantes (não apenas pot_total).
+  - [x] 10 fixtures anonimizadas (sem nicks reais) committed.
+  - [x] CLI `pytest --update-golden` regenera snapshots.
+  - [x] Snapshot tem todos campos relevantes (não apenas pot_total).
 - Agent: Codex | Effort: L | Deps: F1-PARSER-005
 
 ### F1-PARSER-008 — Property tests (Hypothesis)
-- [ ] Description: Generators que produzem HHs sintéticas válidas; parser+invariantes nunca falham nelas.
+- [x] Description: Generators que produzem HHs sintéticas válidas; parser+invariantes nunca falham nelas.
 - Docs: `09-TESTING-CICD.md` §2.6
 - AC:
-  - [ ] ≥3 properties: round-trip render/parse, invariantes sempre OK, posições derivadas consistentes.
-  - [ ] Suite roda em <60s.
+  - [x] ≥3 properties: round-trip render/parse, invariantes sempre OK, posições derivadas consistentes.
+  - [x] Suite roda em <60s.
 - Agent: Codex | Effort: M | Deps: F1-PARSER-006
 
 ### F1-PARSER-009 — Anonymizer CLI
-- [ ] Description: Script `scripts/anonymize_hh.py` que recebe HH e troca usernames por `Player1..PlayerN`, valores por estilizados se necessário.
+- [x] Description: Script `scripts/anonymize_hh.py` que recebe HH e troca usernames por `Player1..PlayerN`, valores por estilizados se necessário.
 - Docs: `05-HH-PARSER-SPEC.md` §10
 - AC:
-  - [ ] Determinístico (mesma entrada → mesma saída).
-  - [ ] Mantém hero (configurável) ou anonimiza tudo.
-  - [ ] Teste verifica que parser ainda processa o output.
+  - [x] Determinístico (mesma entrada → mesma saída).
+  - [x] Mantém hero (configurável) ou anonimiza tudo.
+  - [x] Teste verifica que parser ainda processa o output.
 - Agent: any | Effort: S | Deps: F1-PARSER-002
 
 ### F1-PARSER-010 — Parser benchmark
-- [ ] Description: Suite `pytest-benchmark` rodando parser em fixture de 10k hands sintéticas; falha se cair >20% vs baseline.
+- [x] Description: Suite `pytest-benchmark` rodando parser em fixture de 10k hands sintéticas; falha se cair >20% vs baseline.
 - Docs: `10-PERFORMANCE.md` §7.5
 - AC:
-  - [ ] Throughput ≥1000 hands/s em CI runner padrão.
-  - [ ] Baseline checkado em `tests/benchmarks/baseline.json`.
+  - [x] Throughput ≥1000 hands/s em CI runner padrão.
+  - [x] Baseline checkado em `tests/benchmarks/baseline.json`.
 - Agent: Codex | Effort: S | Deps: F1-PARSER-008
 
 ### F1-REPO-001 — Repositórios (Hands, Imports, Sessions)
-- [ ] Description: Camada de acesso a dados com classes `HandsRepository`, `ImportsRepository`, `SessionsRepository`. Todas as queries com `user_id` explícito.
+- [x] Description: Camada de acesso a dados com classes `HandsRepository`, `ImportsRepository`, `SessionsRepository`. Todas as queries com `user_id` explícito.
 - Docs: `10-PERFORMANCE.md` §2
 - AC:
-  - [ ] Bulk insert `insert_many(drafts)` com chunks de 1000.
-  - [ ] Sem N+1 (verificar com `query_count` fixture).
-  - [ ] Coverage ≥90%.
+  - [x] Bulk insert `insert_many(drafts)` com chunks de 1000.
+  - [x] Sem N+1 (verificar com `query_count` fixture).
+  - [x] Coverage ≥90%.
 - Agent: Codex | Effort: M | Deps: F1-DB-002, F1-PARSER-005
 
 ### F1-STORAGE-001 — Cliente R2/S3 + presigned URLs
-- [ ] Description: Wrapper sobre `boto3` (ou `aioboto3`) configurado para R2 em prod e MinIO em dev. Métodos `generate_presigned_put`, `generate_presigned_get`, `get_object`.
+- [x] Description: Wrapper sobre `boto3` (ou `aioboto3`) configurado para R2 em prod e MinIO em dev. Métodos `generate_presigned_put`, `generate_presigned_get`, `get_object`.
 - Docs: `02-ARCHITECTURE.md`, `08-SECURITY.md` §5
 - AC:
-  - [ ] TTL de presigned PUT ≤15min.
-  - [ ] Path enforcement `users/{user_id}/imports/{import_id}.txt`.
-  - [ ] Teste com MinIO valida fluxo.
+  - [x] TTL de presigned PUT ≤15min.
+  - [x] Path enforcement `users/{user_id}/imports/{import_id}.txt`.
+  - [x] Teste com MinIO valida fluxo.
 - Agent: Codex | Effort: M | Deps: F0-INFRA-001
 
 ### F1-WORKER-001 — Celery setup
-- [ ] Description: `app/worker/celery_app.py` com 4 queues (`parsing`, `stats`, `email`, `billing`); worker startup script; Redis como broker.
+- [x] Description: `app/worker/celery_app.py` com 4 queues (`parsing`, `stats`, `email`, `billing`); worker startup script; Redis como broker.
 - Docs: `02-ARCHITECTURE.md`, `03-TECH-STACK.md`
 - AC:
-  - [ ] `celery -A app.worker.celery_app worker -Q parsing` sobe.
-  - [ ] OTel instrumentation Celery habilitada.
-  - [ ] Tasks com retry + backoff exponencial.
+  - [x] `celery -A app.worker.celery_app worker -Q parsing` sobe.
+  - [x] OTel instrumentation Celery habilitada.
+  - [x] Tasks com retry + backoff exponencial.
 - Agent: Codex | Effort: M | Deps: F0-API-002
 
 ### F1-WORKER-002 — Task: process_import
-- [ ] Description: Task Celery que pega `import_id`, baixa do R2, splita+parsea, persiste hands em batch, atualiza `imports.status`, emite eventos SSE (via Redis pub/sub).
+- [x] Description: Task Celery que pega `import_id`, baixa do R2, splita+parsea, persiste hands em batch, atualiza `imports.status`, emite eventos SSE (via Redis pub/sub).
 - Docs: `02-ARCHITECTURE.md` §4.1
 - AC:
-  - [ ] Idempotente (reprocessar mesmo import dá mesmo resultado).
-  - [ ] Progress reportado a cada 500 hands.
-  - [ ] Erros agregados em `import_errors`; status final `processed` ou `failed`.
+  - [x] Idempotente (reprocessar mesmo import dá mesmo resultado).
+  - [x] Progress reportado a cada 500 hands.
+  - [x] Erros agregados em `import_errors`; status final `processed` ou `failed`.
 - Agent: Codex | Effort: L | Deps: F1-REPO-001, F1-STORAGE-001, F1-WORKER-001
 
 ### F1-API-001 — Auth: register + login + logout
-- [ ] Description: Endpoints `POST /v1/auth/register`, `POST /v1/auth/login`, `POST /v1/auth/logout`. Argon2id, validação de senha contra HIBP, rate limit, cookies httpOnly.
+- [x] Description: Endpoints `POST /v1/auth/register`, `POST /v1/auth/login`, `POST /v1/auth/logout`. Argon2id, validação de senha contra HIBP, rate limit, cookies httpOnly.
 - Docs: `07-API-SPEC.md` §3, `08-SECURITY.md` §2
 - AC:
-  - [ ] Email confirmação enviado em register (com Resend, mock em test).
-  - [ ] Senhas hasheadas com Argon2id.
-  - [ ] Rate limit testado.
-  - [ ] Tenant isolation tests para qualquer endpoint que crie dado.
+  - [x] Email confirmação enviado em register (com Resend, mock em test).
+  - [x] Senhas hasheadas com Argon2id.
+  - [x] Rate limit testado.
+  - [x] Tenant isolation tests para qualquer endpoint que crie dado.
 - Agent: Codex | Effort: L | Deps: F1-DB-001
 
 ### F1-API-002 — Auth: refresh + verify email + password reset
-- [ ] Description: Endpoints `POST /v1/auth/refresh` (rotação + reuse detection), `POST /v1/auth/verify-email`, `POST /v1/auth/forgot-password`, `POST /v1/auth/reset-password`.
+- [x] Description: Endpoints `POST /v1/auth/refresh` (rotação + reuse detection), `POST /v1/auth/verify-email`, `POST /v1/auth/forgot-password`, `POST /v1/auth/reset-password`.
 - Docs: `07-API-SPEC.md` §3.3-3.5, `08-SECURITY.md` §2.3-2.5
 - AC:
-  - [ ] Reuse de refresh detectado → revoga família + log.
-  - [ ] Token de reset single-use + TTL 30min.
+  - [x] Reuse de refresh detectado → revoga família + log.
+  - [x] Token de reset single-use + TTL 30min.
 - Agent: Codex | Effort: L | Deps: F1-API-001
 
 ### F1-API-003 — Imports endpoints
-- [ ] Description: `POST /v1/imports` (gera presigned URL), `POST /v1/imports/{id}/complete` (enfileira task), `GET /v1/imports` (listar), `GET /v1/imports/{id}` (status), `GET /v1/imports/{id}/events` (SSE progress).
+- [x] Description: `POST /v1/imports` (gera presigned URL), `POST /v1/imports/{id}/complete` (enfileira task), `GET /v1/imports` (listar), `GET /v1/imports/{id}` (status), `GET /v1/imports/{id}/events` (SSE progress).
 - Docs: `07-API-SPEC.md` §5
 - AC:
-  - [ ] SSE envia eventos `progress`, `error`, `done`.
-  - [ ] Quota diária respeitada (Free 200MB, Pro 2GB).
-  - [ ] Idempotency-Key suportado em POST.
+  - [x] SSE envia eventos `progress`, `error`, `done`.
+  - [x] Quota diária respeitada (Free 200MB, Pro 2GB).
+  - [x] Idempotency-Key suportado em POST.
 - Agent: Codex | Effort: L | Deps: F1-STORAGE-001, F1-WORKER-002
 
 ### F1-API-004 — Hands endpoints
-- [ ] Description: `GET /v1/hands` (lista com filtros + cursor pagination), `GET /v1/hands/{id}` (detail com seats+actions+pots), `GET /v1/hands/{id}/raw` (texto original).
+- [x] Description: `GET /v1/hands` (lista com filtros + cursor pagination), `GET /v1/hands/{id}` (detail com seats+actions+pots), `GET /v1/hands/{id}/raw` (texto original).
 - Docs: `07-API-SPEC.md` §6, `10-PERFORMANCE.md` §2.5
 - AC:
-  - [ ] Filtros: date_from/to, game_type, buyin_min/max, position, went_to_showdown.
-  - [ ] EXPLAIN ANALYZE no PR.
-  - [ ] Sem N+1 (teste).
-  - [ ] Tenant isolation test.
+  - [x] Filtros: date_from/to, game_type, buyin_min/max, position, went_to_showdown.
+  - [x] EXPLAIN ANALYZE no PR.
+  - [x] Sem N+1 (teste).
+  - [x] Tenant isolation test.
 - Agent: Codex | Effort: L | Deps: F1-REPO-001, F1-API-002
 
 ### F1-QA-001 — E2E: upload → parse → list
-- [ ] Description: Teste Playwright que faz register → login → upload de fixture → aguarda processed → ver hand na listagem.
+- [x] Description: Teste Playwright que faz register → login → upload de fixture → aguarda processed → ver hand na listagem.
 - Docs: `09-TESTING-CICD.md` §3.3
 - AC:
-  - [ ] Roda em <60s em CI.
-  - [ ] Email mock (link de verificação interceptado).
+  - [x] Roda em <60s em CI.
+  - [x] Email mock (link de verificação interceptado).
 - Agent: Claude Code | Effort: M | Deps: F1-API-003, F1-API-004
 
 ---
