@@ -1,0 +1,36 @@
+{
+  "name": "pokerinsight",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20 <21",
+    "pnpm": ">=9 <10"
+  },
+  "scripts": {
+    "prepare": "husky",
+    "lint": "pnpm --filter @pokerinsight/web lint",
+    "format": "pnpm --filter @pokerinsight/web format",
+    "format:check": "pnpm --filter @pokerinsight/web format:check",
+    "typecheck": "pnpm --filter @pokerinsight/web typecheck",
+    "test": "pnpm --filter @pokerinsight/web test",
+    "test:coverage": "pnpm --filter @pokerinsight/web test:coverage",
+    "commitlint": "commitlint --edit"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2"
+  },
+  "lint-staged": {
+    "apps/api/**/*.py": [
+      "ruff check --fix",
+      "ruff format"
+    ],
+    "apps/web/**/*.{ts,tsx,js,jsx,json,css,md}": [
+      "pnpm --filter @pokerinsight/web lint",
+      "pnpm --filter @pokerinsight/web format"
+    ]
+  }
+}

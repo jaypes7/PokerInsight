@@ -1,0 +1,51 @@
+# Secrets and local env
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+jwt_private.pem
+jwt_public.pem
+
+# OS and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Node
+node_modules/
+.next/
+out/
+dist/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+uv.lock
+
+# Build artifacts
+build/
+*.egg-info/
+
+# Data and dumps
+*.dump
+*.sql
+*.sqlite
+*.db
+minio-data/
+postgres-data/
+redis-data/
